@@ -54,25 +54,29 @@ void program_runner()                          // the actual program which will 
     students[0].cgpa = 9.0;
     strcpy(students[0].password, "chocolate");
     strcpy(students[0].branch , "ECE");
-    
+    // SRN : 25ECE101
 
 
     strcpy(students[1].name, "aman");
     students[1].cgpa = 8.5;
     strcpy(students[1].password, "body_builder983");
     strcpy(students[1].branch , "MECH");
+    // SRN : 25MECH102
 
 
     strcpy(students[2].name, "suman");
     students[2].cgpa = 8.0;
     strcpy(students[2].password, "Minecraft_player091");
     strcpy(students[2].branch , "ECE");
+    // SRN : 25ECE103
 
 
     strcpy(students[3].name, "Sachit");
     students[3].cgpa = 9.0;
     strcpy(students[3].password, "no_password");
     strcpy(students[3].branch , "CSE");
+    // SRN : 25CSE104
+
     
     for ( int i = 0 ; i < student_count ; i++)
     {
@@ -83,14 +87,14 @@ void program_runner()                          // the actual program which will 
     {
     printf("---------------------------------------\n");
     printf("Welcome to the student database manager\n");
-    printf("----------------------------------------\n");
+    printf("---------------------------------------\n");
     printf("Choose from the following options\n");
     printf("Create - Create a new account\n");
     printf("Edit   - Edit an existing account\n");
     printf("View   - View data from an existing account\n");
     printf("Delete - Delete an existing account\n");
     printf("Exit   - Exit the running program\n");
-
+    printf("---------------------------------------\n");
     char user_input[10];
     scanf("%9s" , user_input);
 
