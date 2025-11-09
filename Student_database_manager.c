@@ -379,11 +379,6 @@ void account_editor()
                 password(index);
             }
 
-            else if (strcmp(input, "admin_mode") == 0)
-            {
-                // admin mode ( all features)
-            }
-
             else if (strcmp(input, "exit") == 0)
             {
                 break;
@@ -525,7 +520,7 @@ void admin_mode()
 
         if (strcmp(user_input, "view") == 0)
         {
-                }
+        }
 
         else if (strcmp(user_input, "edit") == 0)
         {
@@ -537,6 +532,7 @@ void admin_mode()
 
         else if (strcmp(user_input, "exit") == 0)
         {
+            printf("exit");
         }
 
         else
