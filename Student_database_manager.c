@@ -402,7 +402,12 @@ void account_view()
 {
     int index = srn_checker();
 
-    if (index != -1 && index != -2)
+    if (index == -2)
+    {
+        admin_mode();
+    }
+
+    else if (index != -1 && index != -2)
     {
         printf("Enter the password for the account %s\n", students[index].srn);
         char input_password[20];
@@ -501,15 +506,18 @@ void delete_account(int id)
 
 void admin_mode()
 {
+    printf("Welcome to the admin mode\n");
     while (1)
     {
-
-        printf("Welcome to the admin mode\n");
-        printf("what settings would you like to change\n");
-        printf("View-\n");
-        printf("edit-\n");
-        printf("delete-\n");
-
+        printf("\n");
+        printf("=========================================\n");
+        printf("What settings would you like to change\n");
+        printf("=========================================\n");
+        printf("View accounts\n");
+        printf("Edit accounts\n");
+        printf("Delete accounts\n");
+        printf("Exit \n");
+        printf("=========================================\n");
         char user_input[10];
         scanf("%s", user_input);
 
@@ -520,19 +528,29 @@ void admin_mode()
 
         if (strcmp(user_input, "view") == 0)
         {
+            printf("%d", student_count);
+            for (int i = 0; i < student_count; i++)
+            {
+                printf("Name : %s  Id : %d  SRN : %s  CGPA : %f Branch : %s  Password : %s \n", students[i].name, students[i].id, students[i].srn, students[i].cgpa, students[i].branch, students[i].password);
+                printf("\n");
+            }
         }
 
         else if (strcmp(user_input, "edit") == 0)
         {
+            printf("Which student data would you like to edit\n");
         }
 
         else if (strcmp(user_input, "delete") == 0)
         {
+            printf("which account would you like to delete\n");
+            printf("Enter the id / srn of the account\n");
         }
 
         else if (strcmp(user_input, "exit") == 0)
         {
-            printf("exit");
+            printf(" \n");
+            break;
         }
 
         else
