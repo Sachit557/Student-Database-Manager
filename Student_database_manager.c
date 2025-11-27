@@ -2,6 +2,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#define debug
+
 typedef struct database
 {
     char name[50];      // Student's name
@@ -76,16 +78,17 @@ void program_runner() // the actual program which will be called by the main fun
 
     while (1)
     {
-        printf("---------------------------------------\n");
+        printf("\n");
+        printf("============================================\n");
         printf("Welcome to the student database manager\n");
-        printf("---------------------------------------\n");
+        printf("============================================\n");
         printf("Choose from the following options\n");
         printf("Create - Create a new account\n");
         printf("Edit   - Edit an existing account\n");
-        printf("View   - View data from an existing account\n");
+        printf("View   - View data from an existing account \n");
         printf("Delete - Delete an existing account\n");
         printf("Exit   - Exit the running program\n");
-        printf("---------------------------------------\n");
+        printf("============================================\n");
         char user_input[10];
         scanf("%9s", user_input);
 
@@ -295,7 +298,7 @@ int srn_checker()
 
             if (strcmp(input_srn, Admin_acess) == 0)
             {
-                printf("Secret admin acess mode\n");
+                printf(" \n");
                 return -2;
             }
         }
@@ -418,7 +421,7 @@ void account_view()
             printf("Incorrect password. Access denied.\n");
             return;
         }
-
+        printf("--------------------------------------------  \n");
         printf("Correct Password\n");
         printf("--------------------------------------------  \n");
         printf("Account Stats!!\n");
@@ -518,7 +521,9 @@ void admin_mode()
         printf("Delete accounts\n");
         printf("Exit \n");
         printf("=========================================\n");
-        char user_input[10];
+        char user_input[20];
+        int admin_input;
+        char admin_conformation[5];
         scanf("%s", user_input);
 
         for (int i = 0; user_input[i] != '\0'; i++)
@@ -528,7 +533,7 @@ void admin_mode()
 
         if (strcmp(user_input, "view") == 0)
         {
-            printf("%d", student_count);
+
             for (int i = 0; i < student_count; i++)
             {
                 printf("Name : %s  Id : %d  SRN : %s  CGPA : %f Branch : %s  Password : %s \n", students[i].name, students[i].id, students[i].srn, students[i].cgpa, students[i].branch, students[i].password);
@@ -539,12 +544,56 @@ void admin_mode()
         else if (strcmp(user_input, "edit") == 0)
         {
             printf("Which student data would you like to edit\n");
+            printf("Enter their id\n");
+            scanf("%d", &admin_input);
+            if (admin_input >= student_count)
+            {
+                printf("Wrong id . Please try again\n");
+            }
+
+            else
+            {
+                printf("Choose from the following\n");
+
+                // implement edit account via admin
+            }
         }
 
         else if (strcmp(user_input, "delete") == 0)
         {
             printf("which account would you like to delete\n");
-            printf("Enter the id / srn of the account\n");
+            printf("Enter the id of the account\n");
+            scanf("%d", &admin_input);
+            if (admin_input >= student_count)
+            {
+                printf("Wrong id . Please try again\n");
+            }
+
+            else
+            {
+                printf("Are you sure you want to delete this account (Y/N)\n");
+                scanf("%s", &admin_conformation);
+                for (int i = 0; i < strlen(admin_conformation); i++)
+                {
+                    admin_conformation[i] = tolower(admin_conformation[i]);
+                }
+
+                if (strcmp(admin_conformation, "y") == 0 || strcmp(admin_conformation, "yes") == 0)
+                {
+                    printf("Account deletion sucessful \n");
+                    delete_account(admin_input);
+                }
+
+                else if (strcmp(admin_conformation, "n") == 0 || strcmp(admin_conformation, "no") == 0)
+                {
+                    printf("Account deletion cancelled \n");
+                }
+
+                else
+                {
+                    printf("Wrong input\n");
+                }
+            }
         }
 
         else if (strcmp(user_input, "exit") == 0)
