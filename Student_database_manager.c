@@ -578,7 +578,7 @@ void admin_mode()
                 printf("Branch\n");
                 printf("id\n");
                 printf("CGPA\n");
-                preintf("Password\n");
+                printf("Password\n");
                 printf("==========================\n");
                 scanf("%s", edit_input);
 
