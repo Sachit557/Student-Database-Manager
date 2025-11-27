@@ -2,7 +2,8 @@
 #include <string.h>
 #include <ctype.h>
 
-#define debug
+#define Max_students 100
+#define Admin_Password 20
 
 typedef struct database
 {
@@ -14,9 +15,9 @@ typedef struct database
     int id;             // id
 } db;
 
-char Admin_acess[20] = "orangecake007"; // Admin acess password
+char Admin_acess[Admin_Password] = "orangecake007"; // Admin acess password
 char *Possible_Branches[10] = {"CSE", "ECE", "MECH", "EEE"};
-db students[100];
+db students[Max_students];
 int student_count = 4;
 int id;
 
@@ -196,6 +197,7 @@ void branch_choose(int id)
 void password(int id)
 {
 
+    int attempts = 5;
     int count = 0;
     char test1[15];
     char test2[15];
@@ -241,10 +243,16 @@ void password(int id)
     else
     {
         printf("Wrong password enter again\n");
+        attempts++;
+
+        if (attempts > 5)
+        {
+            printf("max attempts exceeded\n");
+            return;
+        }
+
         password(id);
     }
-
-    // add password attempt loop here!?!?!??!
 }
 
 void account_create()
@@ -333,11 +341,13 @@ void account_editor()
 
             printf("Welcome back %s\n", students[index].srn);
             printf("What would you like to edit?\n");
+            printf("========================================\n");
             printf("Name\n");
             printf("CGPA\n");
             printf("Branch\n");
             printf("Password\n");
             printf("exit\n");
+            printf("========================================\n");
 
             char input[20];
             scanf("%19s", input);
@@ -421,15 +431,15 @@ void account_view()
             printf("Incorrect password. Access denied.\n");
             return;
         }
-        printf("--------------------------------------------  \n");
         printf("Correct Password\n");
-        printf("--------------------------------------------  \n");
+        printf("============================================  \n");
         printf("Account Stats!!\n");
+        printf("============================================  \n");
         printf("SRN - %s\n", students[index].srn);
         printf("Name - %s\n", students[index].name);
         printf("Branch - %s\n", students[index].branch);
         printf("CGPA - %f\n", students[index].cgpa);
-        printf("-------------------------------------------- \n");
+        printf("============================================ \n");
     }
 }
 
@@ -439,6 +449,7 @@ void account_deletor()
     if (index != -1 && index != -2)
     {
         int count = 0;
+        char bool[10];
         printf("Enter the password for the account %s\n", students[index].srn);
         char input_password[20];
         scanf("%19s", input_password);
@@ -450,8 +461,8 @@ void account_deletor()
         }
 
         printf("Correct Password\n");
-        printf("Are you sure you want to delete this account YES/NO\n");
-        char bool[10];
+        printf("Are you sure you want to delete this account (Y/N)\n");
+
         scanf("%9s", bool);
 
         for (int i = 0; bool[i] != '\0'; i++)
@@ -524,6 +535,7 @@ void admin_mode()
         char user_input[20];
         int admin_input;
         char admin_conformation[5];
+
         scanf("%s", user_input);
 
         for (int i = 0; user_input[i] != '\0'; i++)
@@ -543,6 +555,13 @@ void admin_mode()
 
         else if (strcmp(user_input, "edit") == 0)
         {
+            char edit_input[20];
+            char new_string[20];
+            char lower_string[20];
+            int new_cgpa;
+            char new_password[20];
+            char pass_check[20];
+
             printf("Which student data would you like to edit\n");
             printf("Enter their id\n");
             scanf("%d", &admin_input);
@@ -554,8 +573,93 @@ void admin_mode()
             else
             {
                 printf("Choose from the following\n");
+                printf("==========================\n");
+                printf("Name\n");
+                printf("Branch\n");
+                printf("id\n");
+                printf("CGPA\n");
+                preintf("Password\n");
+                printf("==========================\n");
+                scanf("%s", edit_input);
 
-                // implement edit account via admin
+                for (int i = 0; i < strlen(edit_input); i++)
+                {
+                    edit_input[i] = tolower(edit_input[i]);
+                }
+
+                if (strcmp(edit_input, "name") == 0)
+                {
+                    printf("Enter new name\n");
+                    scanf("%s", &new_string);
+                    strcpy(students[admin_input].name, new_string);
+                }
+
+                else if (strcmp(edit_input, "branch") == 0)
+                {
+                    printf("Enter new Branch\n");
+                    scanf("%s", &new_string);
+                    for (int i = 0; i < strlen(new_string); i++)
+                    {
+                        lower_string[i] = tolower(new_string[i]);
+                    }
+
+                    if (strcmp(lower_string, "cse") == 0 || strcmp(lower_string, "ece") == 0 || strcmp(lower_string, "eee") == 0 || strcmp(lower_string, "mech") == 0)
+                    {
+                        strcpy(students[admin_input].branch, new_string);
+                    }
+
+                    else
+                    {
+                        printf("Wrong Branch. Branch can only be CSE , ECE , MECH , EEE\n");
+                    }
+                }
+
+                else if (strcmp(edit_input, "id") == 0)
+                {
+                    printf("Id cannot be changed at this moment\n");
+                    // not possible yet
+                }
+
+                else if (strcmp(edit_input, "cgpa") == 0)
+                {
+                    printf("Enter the new cgpa\n");
+                    scanf("%d", &new_cgpa);
+                    if (new_cgpa < 0 || new_cgpa > 10)
+                    {
+                        return;
+                    }
+
+                    else
+                    {
+                        printf("New CGPA set sucessfully\n");
+                        students[admin_input].cgpa = new_cgpa;
+                    }
+                }
+
+                else if (strcmp(edit_input, "password") == 0)
+                {
+                    printf("Enter the new password\n");
+                    scanf("%s", &new_password);
+
+                    printf("Enter the password again\n");
+                    scanf("%s", &pass_check);
+
+                    if (strcmp(new_password, pass_check) == 0)
+                    {
+                        printf("Password saved sucessfully\n");
+                        strcpy(students[admin_input].password, new_password);
+                    }
+
+                    else
+                    {
+                        printf("password dont match\n");
+                    }
+                }
+
+                else
+                {
+                    printf("Wrong input choice\n");
+                }
             }
         }
 
@@ -571,6 +675,7 @@ void admin_mode()
 
             else
             {
+                printf("Deletion of an account is permanent and it cannot be restored again\n");
                 printf("Are you sure you want to delete this account (Y/N)\n");
                 scanf("%s", &admin_conformation);
                 for (int i = 0; i < strlen(admin_conformation); i++)
@@ -604,6 +709,7 @@ void admin_mode()
 
         else
         {
+            printf("\n");
             printf("Wrong input choice\n");
             continue;
         }
