@@ -449,7 +449,7 @@ void account_deletor()
     if (index != -1 && index != -2)
     {
         int count = 0;
-        char bool[10];
+        char input[10];
         printf("Enter the password for the account %s\n", students[index].srn);
         char input_password[20];
         scanf("%19s", input_password);
@@ -463,19 +463,19 @@ void account_deletor()
         printf("Correct Password\n");
         printf("Are you sure you want to delete this account (Y/N)\n");
 
-        scanf("%9s", bool);
+        scanf("%9s", input);
 
-        for (int i = 0; bool[i] != '\0'; i++)
+        for (int i = 0; input[i] != '\0'; i++)
         {
             count++;
         }
 
         for (int i = 0; i < count; i++)
         {
-            bool[i] = tolower(bool[i]);
+            input[i] = tolower(input[i]);
         }
 
-        if (strcmp(bool, "yes") == 0)
+        if (strcmp(input, "yes") == 0)
         {
             printf("Deletion of an account is permanent and it cannot be restored again\n");
             printf("Are you sure you wanna do this\n");
@@ -497,7 +497,7 @@ void account_deletor()
             }
         }
 
-        else if (strcmp(bool, "no") == 0)
+        else if (strcmp(input, "no") == 0)
         {
             printf("Account not deleted\n");
         }
